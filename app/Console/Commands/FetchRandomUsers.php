@@ -2,12 +2,14 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\Location;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use Carbon\Carbon;
+
 
 class FetchRandomUsers extends Command
 {
@@ -105,7 +107,7 @@ class FetchRandomUsers extends Command
             UserDetail::create([
                 'user_id' => $user->id,
                 'gender' => $userData['gender'],
-                'date_of_birth' => $userData['dob']['date'],
+                'date_of_birth' => Carbon::parse($userData['dob']['date'])->format('Y-m-d H:i:s'),
                 'phone' => $userData['phone'],
                 'cell' => $userData['cell'],
                 'picture_large' => $userData['picture']['large'],
@@ -139,7 +141,8 @@ class FetchRandomUsers extends Command
                 'userData' => $userData,
                 'trace' => $e->getTraceAsString()
             ]);
-            
+            echo $e->getMessage();
+            die();
             return false;
         }
     }
