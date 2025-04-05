@@ -141,8 +141,7 @@ class FetchRandomUsers extends Command
                 'userData' => $userData,
                 'trace' => $e->getTraceAsString()
             ]);
-            echo $e->getMessage();
-            die();
+            
             return false;
         }
     }
